@@ -32,6 +32,7 @@ import Haddock.Backends.Xhtml.Themes (getThemes)
 import Haddock.Backends.LaTeX
 import Haddock.Backends.Hoogle
 import Haddock.Backends.Hyperlinker
+import Haddock.Backends.Json
 import Haddock.Interface
 import Haddock.Interface.Json
 import Haddock.Parser
@@ -369,6 +370,9 @@ render dflags flags qual ifaces installedIfaces extSrcMap = do
 
   when (Flag_HyperlinkedSource `elem` flags && not (null ifaces)) $ do
     ppHyperlinkedSource odir libDir opt_source_css pretty srcMap ifaces
+
+  when (Flag_Json `elem` flags) $ do
+    ppJson title pkgStr visibleIfaces reexportedIfaces odir
 
 -- | From GHC 7.10, this function has a potential to crash with a
 -- nasty message such as @expectJust getPackageDetails@ because
